@@ -1,18 +1,31 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <router-view/>
+    <!--header-->
+    <Header />
+
+    <!--tab-->
+    <Tab />
+
+    <!--router-->
+    <router-view />
   </div>
 </template>
 
 <script>
+import Header from 'components/container/header/header'
+import Tab from 'components/container/tab/tab'
+/**
+ * @author hui
+ * @date 2019/5/23
+ * @Description: app
+*/
 export default {
-  name: 'App'
+  name: 'App',
+  components: {
+    Header,
+    Tab
+  }
 }
 </script>
 
-<style scoped lang="stylus" rel="stylesheet/stylus">
-  @import "assets/stylus/variable.styl"
-  #app
-    color: $color-theme
-</style>
+<style lang="stylus"></style>
