@@ -7,7 +7,10 @@
     <Tab />
 
     <!--router-->
-    <router-view />
+    <div class="m-all">
+      <router-view />
+    </div>
+
   </div>
 </template>
 
