@@ -1,3 +1,20 @@
 @import "./reset.styl"
-@import "./base.styl"
-@import "./icon.styl"
+@import "./variable.styl"
+
+/* base */
+body, html
+  line-height : 1
+  font-family : 'PingFang SC', 'STHeitiSC-Light', 'Helvetica-Light', Arial, sans-serif, 'Droid Sans Fallback'
+  user-select : none
+  -webkit-tap-highlight-color : transparent
+  background : $color-background
+  color: $color-text
+
+/* module */
+.m-all
+  position relative
+  top 88px
+  left 0
+  width 100%
+  height calc(100% - 88px)
+  overflow-x hidden

@@ -89,7 +89,6 @@ export default {
           width 100%
           height 100%
     .m-recommend-list
-      width: 100%
       padding 10px
       h3
         text-align center
@@ -115,5 +114,5 @@ export default {
               p
                 line-height 28px
                 &:last-child
-                  color $color-dialog-background
+                  color $color-text-d
 </style>
