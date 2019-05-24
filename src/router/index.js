@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-
+import { Icon } from 'vant'
 Vue.use(Router)
+Vue.use(Icon)
 
 export default new Router({
   routes: [
@@ -17,7 +18,15 @@ export default new Router({
     {
       path: '/singer',
       name: 'singer',
-      component: () => import('components/singer/singer')
+      props: true,
+      component: () => import('components/singer/singer'),
+      children: [
+        {
+          path: ':id',
+          name: 'singerDetail',
+          component: () => import('components/singer/singerDetail')
+        }
+      ]
     },
     {
       path: '/rank',
