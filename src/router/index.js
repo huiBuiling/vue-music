@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import { Icon } from 'vant'
+import { Icon, Button } from 'vant'
 Vue.use(Router)
-Vue.use(Icon)
+Vue.use(Icon).use(Button)
 
 export default new Router({
   routes: [

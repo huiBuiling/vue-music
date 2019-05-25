@@ -12,7 +12,9 @@ axios.defaults.headers.delete['X-Requested-With'] = 'XMLHttpRequest'
 
 function query(url, params) {
   return new Promise((resolve, reject) => {
-    axios.get(`${prefix}${url}`, {params: params}).then(res => {
+    axios.get(`${prefix}${url}`, {params: params},{
+      Content-type
+    }).then(res => {
       resolve(res.data)
     }).catch(err => {
       reject(err.data)
