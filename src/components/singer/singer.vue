@@ -3,10 +3,10 @@
     <div class="m-singer">
       <h3>歌手列表</h3>
       <ul v-show="showSinger">
-        <li v-for="(item, index) in singers" :key="index" @click="goDetail(item.singer_mid, item.singer_pic)">
+        <li v-for="(item, index) in singers" :key="index" @click="goDetail(item.id)">
           <div>
-            <img :src="item.singer_pic" alt="">
-            <span>{{item.singer_name}}</span>
+            <img :src="item.img1v1Url" alt="">
+            <span>{{item.name}}</span>
           </div>
         </li>
       </ul>
@@ -29,7 +29,7 @@ export default {
   data () {
     return {
       singers: [],
-      singerUrl: '/tencent/artist/list?sexId=-100&areaId=-100&genre=-100&index=-100&page=0&pageSize=10',
+      singerUrl: '/netease/artist/top?page=0&pageSize=30',
       name: '',
       showSinger: true
     }
@@ -44,11 +44,11 @@ export default {
       })
     },
     // 跳转详情
-    goDetail(mid, img) {
+    goDetail(id) {
       // this.showSinger = false
-      this.$store.dispatch('singers/changImg', img)
+      // this.$store.dispatch('singers/changImg', img)
       this.$router.push({
-        path: `/singer/${mid}`
+        path: `/singer/${id}`
       })
     }
   },
@@ -74,7 +74,7 @@ export default {
       li
         width 100%
         clear both
-        margin-bottom 20px
+        margin-bottom 10px
         div
           font-size $font-size-medium
           img
