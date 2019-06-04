@@ -1,7 +1,7 @@
 <template>
   <div class="m-singer-detail">
     <!--详情-->
-    <div v-if="!showPlayer">
+    <div v-if="!showPlayer" class="m-singer-all">
       <!--img-->
       <div class="admin-img" :style="bgStyle">
         <van-icon
@@ -14,61 +14,65 @@
       </div>
 
       <!--list-->
-      <div class="m-singer-detail-con">
+      <!--<div class="m-singer-detail-con">-->
         <van-tabs v-model="active" @click="checkType" animated>
           <!--单曲-->
-          <van-tab title="单曲">
-            <!--<scroll>-->
-              <ul ref="wrapper">
-                <li v-for="(item, index) in musicDatas" :key="index" @click="goPlayer(item)">
-                  <div class="m-detail-songs">
-                    <p>{{item.name}}</p>
-                    <p>
+          <van-tab title="单曲"></van-tab>
+          <van-tab title="专辑"></van-tab>
+          <van-tab title="MV"></van-tab>
+        </van-tabs>
+
+        <div class="m-singer-detail-li">
+          <!--<scroll>-->
+          <ul ref="wrapper"  v-if="active === 0">
+            <li v-for="(item, index) in musicDatas" :key="index" @click="goPlayer(item)">
+              <div class="m-detail-songs">
+                <p>{{item.name}}</p>
+                <p>
                       <span v-for="(itemA, indexA) in item.ar" :key="indexA">
                         {{itemA.name}}{{(indexA + 1) === item.ar.length ? '':','}}
                       </span>
-                    </p>
-                  </div>
-                </li>
-              </ul>
-            <!--</scroll>-->
-          </van-tab>
+                </p>
+              </div>
+            </li>
+          </ul>
+          <!--</scroll>-->
 
           <!--专辑-->
-          <van-tab title="专辑">
-            <ul>
-              <li v-for="(item, index) in albumDatas" :key="index">
-                <div class="m-detail-album">
-                  <img :src="item.picUrl" alt="">
-                  <div>
-                    <p>{{item.name}}</p>
-                    <p>{{item.artist.name}}</p>
-                  </div>
+          <ul v-if="active === 1">
+            <li v-for="(item, index) in albumDatas" :key="index">
+              <div class="m-detail-album">
+                <img :src="item.picUrl" alt="">
+                <div>
+                  <p>{{item.name}}</p>
+                  <p>{{item.artist.name}}</p>
                 </div>
-              </li>
-            </ul>
-          </van-tab>
+              </div>
+            </li>
+          </ul>
 
           <!--MV-->
-          <van-tab title="MV">
-            <ul>
-              <li v-for="(item, index) in mvDatas" :key="index">
-                <div class="m-detail-mv">
-                  <img :src="item.imgurl" alt="">
-                  <div>
-                    <p>{{item.name}}</p>
-                    <p>{{item.artistName}}</p>
-                  </div>
+          <ul v-if="active === 2">
+            <li v-for="(item, index) in mvDatas" :key="index">
+              <div class="m-detail-mv">
+                <img :src="item.imgurl" alt="">
+                <div>
+                  <p>{{item.name}}</p>
+                  <p>{{item.artistName}}</p>
                 </div>
-              </li>
-            </ul>
-          </van-tab>
-        </van-tabs>
-      </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      <!--</div>-->
     </div>
 
     <!--播放器-->
-    <player v-if="showPlayer" @showDetail="showDetail" :currentSong="currentSong"/>
+    <player
+      v-if="showPlayer || mini"
+      @showDetail="showDetail"
+      :mini="mini"
+    />
   </div>
 </template>
 
@@ -82,6 +86,7 @@ import Vue from 'vue'
 import {query} from '../../utils/AxiosUtil'
 import Player from './player'
 import { Tab, Tabs } from 'vant'
+import { musicMixin } from '../../utils/mixin'
 // import BScroll from 'better-scroll'
 Vue.use(Tab).use(Tabs)
 export default {
@@ -92,16 +97,9 @@ export default {
   props: {
     admin: String
   },
+  mixins: [musicMixin],
   data () {
     return {
-      // 是否显示播放器
-      showPlayer: true,
-      // player 需要的属性
-      currentSong: {
-        id: '1357999894',
-        name: '归去来兮',
-        img: 'http://p4.music.126.net/H6dt7IgvXNWhRM_w7XbcqQ==/109951163990575387.jpg'
-      },
       // tab active
       active: 0,
       // 单曲列表
@@ -112,7 +110,11 @@ export default {
       albumUrl: '/netease/album/artist?id=',
       // MV列表
       mvDatas: [],
-      mvUrl: '/netease/mv/artist?id='
+      mvUrl: '/netease/mv/artist?id=',
+      // 是否显示播放器
+      showPlayer: false,
+      // mini模式
+      mini: false
     }
   },
   methods: {
@@ -136,7 +138,7 @@ export default {
             this.mvDatas = res.data
           }
           this.$toast.clear()
-          this.showPlayer = true
+          // this.showPlayer = true
         }
       })
     },
@@ -150,25 +152,42 @@ export default {
       const id = this.$route.params.id
       this.getSingerDetail(id, title)
     },
+    // 返回
     goBack() {
       this.$router.push({path: '/singer'})
     },
+    // 显示播放器
     goPlayer(item) {
-      this.currentSong = {
+      /* const curSong = {
         id: item.id,
+        singer: item.ar,
         name: item.name,
         img: item.al.picUrl
+      } */
+      const curSong = {
+        id: '1357999894',
+        singer: [{name: '花粥'}, {name: '胜男'}],
+        name: '归去来兮',
+        img: 'http://p4.music.126.net/H6dt7IgvXNWhRM_w7XbcqQ==/109951163990575387.jpg',
+        url: 'http://www.ytmp3.cn/down/50354.mp3'
       }
-      console.log(item)
+      // this.$store.dispatch('singers/setCurrentSong', this.currentSong)
+      // 使用 musicMixin
+      this.setCurrentSong(curSong)
+
       this.showPlayer = true
+      this.mini = false
     },
+    // 显示详情
     showDetail() {
       this.showPlayer = false
+      this.mini = true
     }
   },
   computed: {
     bgStyle() {
-      return `background-image:url(${this.$store.state.singers.singerImg})`
+      // return `background-image:url(${this.$store.state.singers.singerImg})`
+      return `background-image:url(${this.singerImg})`
     }
   },
   /* mounted() {
@@ -197,16 +216,17 @@ export default {
     height 100%
     background $color-background
     z-index 100
-    &>div
+    .m-singer-all
       width 100%
       height 100%
+      overflow hidden
       .admin-img
-        position: relative;
-        width: 100%;
-        height: 200px;
-        -webkit-transform-origin: top;
-        transform-origin: top;
-        background-size: cover;
+        position relative
+        width 100%
+        height 200px
+        -webkit-transform-origin top
+        transform-origin top
+        background-size cover
         .van-button--warning
           position absolute
           bottom 10px
@@ -218,24 +238,30 @@ export default {
           height 30px
           line-height 30px
           font-size $font-size-small
+      /*.m-singer-detail-con
+        width 100%
+        height calc(100% - 245px)
+        overflow hidden*/
+
       .van-tabs
         color $color-theme
         font-size $font-size-small
-        .van-tabs__line
-          background $color-theme
+        .van-tabs__nav
+          background $color-background
+          .van-tabs__line
+            background $color-theme
         .van-tab
           background $color-background
           color $color-theme
         .van-hairline--top-bottom::after
           border none
-      .m-singer-detail-con
+      .m-singer-detail-li
         width 100%
         height calc(100% - 245px)
-        overflow hidden
+        overflow-x hidden
         ul
           height 100%
           overflow-x hidden
-          overflow-y scroll
           padding 10px 20px
           li
             width 100%

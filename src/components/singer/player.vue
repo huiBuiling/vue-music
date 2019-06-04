@@ -1,53 +1,70 @@
 <template>
   <div class="m-player">
-
-    <!--header-->
-    <div class="m-player-head">
-      <van-icon name="arrow-left" @click="goBack"/>
-      <span>{{currentSong.name}}</span>
-    </div>
-
-    <!--con-->
-    <div class="m-player-con" :class="{'play':isPlay, 'pause':!isPlay}">
-      <img v-if="currentSong.img" :src="currentSong.img" alt="">
-    </div>
-
-    <!--lrc-->
-    <div class="m-player-lrc">
-      <!--<div v-for="(item, index) in detail.lrc" :key="index" v-if="detail.lrc">
-        <p>{{item}}</p>
-      </div>-->
-    </div>
-
-    <div class="m-player-bot">
-      <!--audio-->
-      <audio
-             autoplay="true"
-             ref="audio"
-             :src="currentSong.url"
-             @error="error"
-             @timeupdate="updateTime"
-             @durationchange="init"
-             @ended="end"
-      />
-
-      <!--slider-->
-      <div class="m-player-slider">
-        <span>{{format(currentTime)}}</span>
-        <van-slider v-model="value" @change="setProgress" />
-        <span>{{format(allTime)}}</span>
+    <!--全屏-->
+    <div class="m-player-screen" v-if="!mini">
+      <!--header-->
+      <div class="m-player-head">
+        <van-icon name="arrow-left" @click="goBack"/>
+        <span>{{currentSong.name}}</span>
       </div>
 
-      <!--bar-->
-      <div class="m-player-bar">
-        <span><i class="icon-p-sj"/></span>
-        <span><i class="icon-p-pre"/></span>
-        <!--播放-->
-        <span v-show="isPlay"><i style="font-size: 38px" class="icon-p-bf'" @click="isPlayMusic(true)"/></span>
-        <!--暂停-->
-        <span v-show="!isPlay"><i style="font-size: 38px" class="icon-p-zt" @click="isPlayMusic(false)"/></span>
-        <span><i class="icon-p-next"/></span>
-        <span><i class="icon-p-xh"/></span>
+      <!--con-->
+      <div class="m-player-con" :class="{'play':isPlay, 'pause':!isPlay}">
+        <img v-if="currentSong.img" :src="currentSong.img" alt="">
+      </div>
+
+      <!--lrc-->
+      <div class="m-player-lrc">
+        <!--<div v-for="(item, index) in detail.lrc" :key="index" v-if="detail.lrc">
+          <p>{{item}}</p>
+        </div>-->
+      </div>
+
+      <div class="m-player-bot">
+        <!--slider-->
+        <div class="m-player-slider">
+          <span>{{format(currentTime)}}</span>
+          <van-slider v-model="value" @change="setProgress" />
+          <span>{{format(allTime)}}</span>
+        </div>
+
+        <!--bar-->
+        <div class="m-player-bar">
+          <span><i class="icon-p-sj"/></span>
+          <span><i class="icon-p-pre"/></span>
+          <!-- 播放 | 暂停-->
+          <span><i style="font-size: 38px" :class="{'icon-p-bf': isPlay, 'icon-p-zt': !isPlay}" @click="isPlayMusic()"/></span>
+          <span><i class="icon-p-next"/></span>
+          <span><i class="icon-p-xh"/></span>
+        </div>
+      </div>
+    </div>
+
+    <!--audio-->
+    <audio
+      autoplay="true"
+      ref="audio"
+      :src="currentSong.url"
+      @error="error"
+      @timeupdate="updateTime"
+      @durationchange="init"
+      @ended="end"
+    />
+
+    <!--mini-->
+    <div class="m-player-mini" v-if="mini">
+      <div class="m-player-mini-l">
+        <img v-if="currentSong.img" :src="currentSong.img" alt="">
+        <div>
+          <p>{{currentSong.name}}</p>
+          <p>
+            <span v-for="(item, index) in currentSong.singer" :key="index">{{item.name}}</span></p>
+        </div>
+      </div>
+
+      <div class="m-player-mini-r">
+        <!-- 播放 | 暂停-->
+        <span><i style="font-size: 38px" :class="{'icon-p-bf': isPlay, 'icon-p-zt': !isPlay}" @click="isPlayMusic()"/></span>
       </div>
     </div>
   </div>
@@ -61,13 +78,15 @@
 */
 import Vue from 'vue'
 import {query} from '../../utils/AxiosUtil'
+import { musicMixin } from '../../utils/mixin'
 import { Slider } from 'vant'
 Vue.use(Slider)
 export default {
   name: 'Player',
-  /* props: {
-    currentSong: {}
-  }, */
+  props: {
+    mini: Boolean
+  },
+  mixins: [musicMixin],
   data () {
     return {
       lrcUrl: '/tencent/lrc?id=',
@@ -78,15 +97,16 @@ export default {
       allTime: 0,
       // 进度值
       value: 0,
-      currentSong: {
+      /* currentSong: {
         id: '1357999894',
+        singer: [{name: '花粥'}, {name: '胜男'}],
         name: '归去来兮',
         img: 'http://p4.music.126.net/H6dt7IgvXNWhRM_w7XbcqQ==/109951163990575387.jpg',
         // url: 'http://www.ytmp3.cn/down/59296.mp3'
         url: 'http://www.ytmp3.cn/down/50354.mp3'
-      },
+      }, */
       // 音量
-      volume: 10
+      volume: 20
     }
   },
   methods: {
@@ -115,9 +135,12 @@ export default {
     },
     /* 音乐操作 */
     // 播放 / 暂停
-    isPlayMusic(flag) {
+    isPlayMusic() {
       const audios = this.$refs.audio
-      if (flag) {
+
+      // this.isPlay = true, 在播放，当前执行暂停
+      // this.isPlay = false, 暂停，当前执行播放
+      if (!this.isPlay) {
         // 播放
         this.isPlay = true
         audios.load()
@@ -147,6 +170,7 @@ export default {
       this.currentTime = audios.currentTime
       this.allTime = audios.duration
       audios.volume = (this.volume / 100)
+      this.isPlay = true
     },
     // 格式化时间
     format(interval) {
@@ -190,73 +214,106 @@ export default {
     100%
       transform: rotate(360deg)
   .m-player
-    position fixed
-    top 0
-    left 0
-    width 100%
-    height 100%
-    background $color-background
-    z-index 100
-    .m-player-head
+    .m-player-mini
+      position: absolute;
+      bottom: 0;
+      left: 0;
       width 100%
-      height 44px
-      line-height 44px
-      color $color-text
-      text-align center
-      .van-icon
-        position absolute
-        left 10px
-        top 10px
-      .title
+      height 60px
+      border-top 1px solid $color-text-d
+      .m-player-mini-l
+        float left
+        padding 10px
+        img
+          width 40px
+          height 40px
+          border-radius 50%
+          float: left
+          margin-right 10px
+        div
+          float: left
+          text-align left
+          font-size $font-size-small
+          p
+            line-height 20px
+            &:last-child
+              color $color-text-d
+      .m-player-mini-r
+        float right
+        margin-right 10px
+        padding-top 13px
+        span
+          margin-right 10px
+          i
+            color $color-theme
+    .m-player-screen
+      position fixed
+      top 0
+      left 0
+      width 100%
+      height 100%
+      background $color-background
+      z-index 100
+      .m-player-head
+        width 100%
+        height 44px
+        line-height 44px
+        color $color-text
         text-align center
-    .m-player-con
-      width 260px
-      height 260px
-      border-radius 50%
-      //margin calc((100% - 100px) / 3) auto 0
-      margin 15% auto 0
-      border 5px solid $color-dialog-background
-      &.play
-        animation: rotate 10s linear infinite
-      &.pause
-        animation-play-state: paused
-      img
+        .van-icon
+          position absolute
+          left 10px
+          top 10px
+        .title
+          text-align center
+      .m-player-con
         width 260px
         height 260px
         border-radius 50%
-    .m-player-lrc
-      padding 0 10px
-    .m-player-bot
-      position absolute
-      bottom 0
-      left 0
-      width 100%
-      .m-player-slider
-        height 30px
-        width 85%
-        margin 0 auto 20px
-        &>span
-          float left
-          display inline-block
-          vertical-align: middle
-          width: 60px
-          line-height 30px
+        //margin calc((100% - 100px) / 3) auto 0
+        margin 15% auto 0
+        border 5px solid $color-dialog-background
+        &.play
+          animation: rotate 10s linear infinite
+        &.pause
+          animation-play-state: paused
+        img
+          width 260px
+          height 260px
+          border-radius 50%
+      .m-player-lrc
+        padding 0 10px
+      .m-player-bot
+        position absolute
+        bottom 0
+        left 0
+        width 100%
+        .m-player-slider
+          height 30px
+          width 85%
+          margin 0 auto 20px
+          &>span
+            float left
+            display inline-block
+            vertical-align: middle
+            width: 60px
+            line-height 30px
+            text-align center
+          .van-slider {
+            float left;
+            width calc(100% - 120px)
+            vertical-align: middle
+            margin-top 15px
+          }
+        .m-player-bar
+          height 56px
+          display flex
           text-align center
-        .van-slider {
-          float left;
-          width calc(100% - 120px)
-          vertical-align: middle
-          margin-top 15px
-        }
-      .m-player-bar
-        height 56px
-        display flex
-        text-align center
-        &>span
-          flex 1
-          font-size 30px
-          color $color-theme
-          i
+          &>span
+            flex 1
             font-size 30px
-            vertical-align: text-bottom;
+            color $color-theme
+            i
+              font-size 30px
+              vertical-align: text-bottom;
 </style>

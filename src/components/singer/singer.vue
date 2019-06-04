@@ -31,7 +31,7 @@ export default {
       singers: [],
       singerUrl: '/netease/artist/top?page=0&pageSize=30',
       name: '',
-      showSinger: true
+      showSinger: false
     }
   },
   methods: {
@@ -40,6 +40,7 @@ export default {
       query(this.singerUrl).then((res) => {
         if (res.code === 200) {
           this.singers = res.data
+          this.showSinger = true
         }
       })
     },
