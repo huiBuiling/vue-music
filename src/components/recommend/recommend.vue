@@ -76,43 +76,43 @@ export default {
   @import "~assets/stylus/variable"
 
   .m-recommend
-    width 100%
-    height 100%
+    width: 100%
+    height: 100%
     .m-recommend-swipe
       width: 100%
-      height 200px
-      overflow hidden
+      height: 200px
+      overflow: hidden
       .van-swipe
-        width 100%
-        height 100%
+        width: 100%
+        height: 100%
         img
-          width 100%
-          height 100%
+          width: 100%
+          height: 100%
     .m-recommend-list
-      padding 10px
+      padding: 10px
       h3
-        text-align center
-        color $color-theme
-        margin-top 20px
-        margin-bottom 10px
-        font-size $font-size-large
+        text-align: center
+        color: $color-theme
+        margin-top: 20px
+        margin-bottom: 10px
+        font-size: $font-size-large
       ul
-        padding 10px
+        padding: 10px
         li
-          width 100%
-          clear both
-          margin-bottom 20px
+          width: 100%
+          clear: both
+          margin-bottom: 20px
           div
-            font-size $font-size-medium
+            font-size: $font-size-medium
             img
-              width 60px
-              height 60px
-              float left
-              margin-right 10px
+              width: 60px
+              height: 60px
+              float: left
+              margin-right: 10px
             div
-              padding-top 5px
+              padding-top: 5px
               p
-                line-height 28px
+                line-height: 28px
                 &:last-child
-                  color $color-text-d
+                  color: $color-text-d
 </style>

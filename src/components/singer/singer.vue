@@ -63,28 +63,28 @@ export default {
   @import "~assets/stylus/variable"
   .m-singer
     h3
-      height 30px
-      line-height 30px
-      background $color-dialog-background
-      color $color-theme
+      height: 30px
+      line-height: 30px
+      background: $color-dialog-background
+      color: $color-theme
       font-size $font-size-small
-      text-align left
-      padding 0 10px
+      text-align: left
+      padding: 0 10px
     ul
-      padding 10px 20px
+      padding: 10px 20px
       li
-        width 100%
-        clear both
-        margin-bottom 10px
+        width: 100%
+        clear: both
+        margin-bottom: 10px
         div
-          font-size $font-size-medium
+          font-size: $font-size-medium
           img
-            width 40px
-            height 40px
-            float left
-            margin-right 10px
-            border-radius 50%
+            width: 40px
+            height: 40px
+            float: left
+            margin-right: 10px
+            border-radius: 50%
           span
-            color $color-text
-            line-height 40px
+            color: $color-text
+            line-height: 40px
 </style>

@@ -25,40 +25,40 @@ export default {
 
   .m-header
     position: fixed
-    top 0
-    left 0
-    width 100%
-    height 44px
-    background $color-background
+    top: 0
+    left: 0
+    width: 100%
+    height: 44px
+    background: $color-background
     text-align: center
-    color $color-theme
+    color: $color-theme
     font-size: 0
-    z-index 2
+    z-index: 2
     .m-header-con
-      width 100%
+      width: 100%
       text-align: center
       .icon
-        display inline-block
-        vertical-align top
-        margin-top 6px
-        width 30px
-        height 32px
-        margin-right 9px
+        display: inline-block
+        vertical-align: top
+        margin-top: 6px
+        width: 30px
+        height: 32px
+        margin-right: 9px
         bg-image('logo')
-        background-size 30px 32px
+        background-size: 30px 32px
       .text
         display: inline-block
-        vertical-align top
-        line-height 44px
-        font-size $font-size-large
-        text-align center
+        vertical-align: top
+        line-height: 44px
+        font-size: $font-size-large
+        text-align: center
       .mine
-        position absolute
-        top 0
-        right 0
+        position: absolute
+        top: 0
+        right: 0
         .icon-mine
-          display block
-          padding 12px
-          font-size 20px
-          color $color-theme
+          display: block
+          padding: 12px
+          font-size: 20px
+          color: $color-theme
 </style>

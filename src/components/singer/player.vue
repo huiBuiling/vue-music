@@ -207,7 +207,7 @@ export default {
 </script>
 
 <style lang="stylus">
-  @import "~assets/stylus/variable"
+  @import "~assets/stylus/index"
   @keyframes rotate
     0%
       transform: rotate(0)
@@ -218,102 +218,102 @@ export default {
       position: absolute;
       bottom: 0;
       left: 0;
-      width 100%
-      height 60px
-      border-top 1px solid $color-text-d
+      width: 100%
+      height: 60px
+      border-top: 1px solid $color-text-d
       .m-player-mini-l
-        float left
-        padding 10px
+        float: left
+        padding: 10px
         img
-          width 40px
-          height 40px
-          border-radius 50%
+          width: 40px
+          height: 40px
+          border-radius: 50%
           float: left
-          margin-right 10px
+          margin-right: 10px
         div
           float: left
-          text-align left
-          font-size $font-size-small
+          text-align: left
+          font-size: $font-size-small
           p
-            line-height 20px
+            line-height: 20px
             &:last-child
-              color $color-text-d
+              color: $color-text-d
       .m-player-mini-r
-        float right
-        margin-right 10px
-        padding-top 13px
+        float: right
+        margin-right: 10px
+        padding-top: 13px
         span
-          margin-right 10px
+          margin-right: 10px
           i
-            color $color-theme
+            color: $color-theme
     .m-player-screen
-      position fixed
-      top 0
-      left 0
-      width 100%
-      height 100%
-      background $color-background
-      z-index 100
+      position: fixed
+      top: 0
+      left: 0
+      width: 100%
+      height: 100%
+      background: $color-background
+      z-index: 100
       .m-player-head
-        width 100%
-        height 44px
-        line-height 44px
-        color $color-text
-        text-align center
+        width: 100%
+        height: 44px
+        line-height: 44px
+        color: $color-text
+        text-align: center
         .van-icon
-          position absolute
-          left 10px
-          top 10px
+          position: absolute
+          left: 10px
+          top: 10px
         .title
-          text-align center
+          text-align: center
       .m-player-con
-        width 260px
-        height 260px
-        border-radius 50%
-        //margin calc((100% - 100px) / 3) auto 0
-        margin 15% auto 0
-        border 5px solid $color-dialog-background
+        width: 260px
+        height: 260px
+        border-radius: 50%
+        //margin: calc((100% - 100px) / 3) auto 0
+        margin: 15% auto 0
+        border: 5px solid $color-dialog-background
         &.play
           animation: rotate 10s linear infinite
         &.pause
           animation-play-state: paused
         img
-          width 260px
-          height 260px
-          border-radius 50%
+          width: 260px
+          height: 260px
+          border-radius: 50%
       .m-player-lrc
-        padding 0 10px
+        padding: 0 10px
       .m-player-bot
-        position absolute
-        bottom 0
-        left 0
-        width 100%
+        position: absolute
+        bottom: 0
+        left: 0
+        width: 100%
         .m-player-slider
-          height 30px
-          width 85%
-          margin 0 auto 20px
+          height: 30px
+          width: 85%
+          margin: 0 auto 20px
           &>span
-            float left
-            display inline-block
+            float: left
+            display: inline-block
             vertical-align: middle
             width: 60px
-            line-height 30px
-            text-align center
+            line-height: 30px
+            text-align: center
           .van-slider {
-            float left;
-            width calc(100% - 120px)
+            float: left;
+            width: calc(100% - 120px)
             vertical-align: middle
-            margin-top 15px
+            margin-top: 15px
           }
         .m-player-bar
-          height 56px
-          display flex
-          text-align center
+          height: 56px
+          display: flex
+          text-align: center
           &>span
-            flex 1
-            font-size 30px
-            color $color-theme
+            flex: 1
+            font-size: 30px
+            color: $color-theme
             i
-              font-size 30px
+              font-size: 30px
               vertical-align: text-bottom;
 </style>

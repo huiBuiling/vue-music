@@ -207,109 +207,99 @@ export default {
 </script>
 
 <style lang="stylus">
-  @import "~assets/stylus/variable"
+  @import "~assets/stylus/index"
   .m-singer-detail
-    position fixed
-    top 0
-    left 0
-    width 100%
-    height 100%
-    background $color-background
-    z-index 100
+    new-main()
+    background: $color-background
     .m-singer-all
-      width 100%
-      height 100%
-      overflow hidden
+      width: 100%
+      height: 100%
+      overflow: hidden
       .admin-img
-        position relative
-        width 100%
-        height 200px
-        -webkit-transform-origin top
-        transform-origin top
-        background-size cover
+        position: relative
+        width: 100%
+        height: 200px
+        -webkit-transform-origin: top
+        transform-origin: top
+        background-size: cover
         .van-button--warning
-          position absolute
-          bottom 10px
-          left calc(50% - 4em)
-          background transparent
-          border 1px solid $color-theme
-          color $color-theme
-          border-radius 20px
-          height 30px
-          line-height 30px
-          font-size $font-size-small
-      /*.m-singer-detail-con
-        width 100%
-        height calc(100% - 245px)
-        overflow hidden*/
-
+          position: absolute
+          bottom: 10px
+          left: calc(50% - 4em)
+          background: transparent
+          border: 1px solid $color-theme
+          color: $color-theme
+          border-radius: 20px
+          height: 30px
+          line-height: 30px
+          font-size: $font-size-small
       .van-tabs
-        color $color-theme
-        font-size $font-size-small
+        color: $color-theme
+        font-size: $font-size-small
         .van-tabs__nav
-          background $color-background
+          background: $color-background
           .van-tabs__line
-            background $color-theme
+            background: $color-theme
         .van-tab
-          background $color-background
-          color $color-theme
+          background: $color-background
+          color: $color-theme
         .van-hairline--top-bottom::after
-          border none
+          border: none
       .m-singer-detail-li
-        width 100%
-        height calc(100% - 245px)
-        overflow-x hidden
+        width: 100%
+        height: calc(100% - 245px)
+        overflow-x: hidden
         ul
-          height 100%
-          overflow-x hidden
-          padding 10px 20px
+          height: 100%
+          overflow-x: hidden
+          padding: 10px 20px
           li
-            width 100%
-            clear both
-            margin-bottom 5px
-            overflow hidden
+            width: 100%
+            clear: both
+            margin-bottom: 5px
+            overflow: hidden
             .m-detail-songs
-              overflow hidden
-              font-size $font-size-small
+              overflow: hidden
+              font-size: $font-size-small
               p
-                line-height 20px
-                color $color-text
+                line-height: 20px
+                color: $color-text
                 &:last-child
-                  color $color-text-d
+                  color: $color-text-d
             .m-detail-album
-              font-size $font-size-small
+              font-size: $font-size-small
               margin-bottom: 5px
-              overflow hidden
+              overflow: hidden
               img
-                width 40px
-                height 40px
-                margin-right 10px
-                float left
+                width: 40px
+                height: 40px
+                margin-right: 10px
+                float: left
               div
-                float left
+                float: left
                 p
-                  color $color-text
-                  line-height 20px
+                  color: $color-text
+                  line-height: 20px
                   &:last-child
-                    color $color-text-d
+                    color: $color-text-d
             .m-detail-mv
-              font-size $font-size-medium
+              font-size: $font-size-medium
               margin-bottom: 5px
-              overflow hidden
-              background $color-dialog-background
-              border-radius 5px
+              overflow: hidden
+              background: $color-dialog-background
+              border-radius: 5px
               padding: 10px
               img
-                width 60px
-                height 60px
-                margin-right 10px
-                float left
+                width: 60px
+                height: 60px
+                margin-right: 10px
+                float: left
               div
-                float left
+                float: left
                 p
-                  color $color-text
-                  line-height 30px
+                  color: $color-text
+                  line-height: 30px
                   &:last-child
-                    color $color-text-d
-                    font-size $font-size-small
+                    color: $color-text-d
+                    font-size: $font-size-small
 </style>

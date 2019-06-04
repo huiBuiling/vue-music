@@ -31,26 +31,26 @@ export default {
   @import "~assets/stylus/variable"
   .m-tab
     position: fixed
-    top 44px
-    left 0
-    width 100%
-    height 44px
-    background $color-background
-    z-index 2
+    top: 44px
+    left: 0
+    width: 100%
+    height: 44px
+    background: $color-background
+    z-index: 2
     .m-tab-con
-      display flex
-      width 100%
-      height 44px
-      line-height 44px
-      font-size $font-size-medium
+      display: flex
+      width: 100%
+      height: 44px
+      line-height: 44px
+      font-size: $font-size-medium
       .m-tab-item
-        flex 1
-        text-align center
+        flex: 1
+        text-align: center
         .m-tab-link
-          padding-bottom 5px
-          color $color-text-l
+          padding-bottom: 5px
+          color: $color-text-l
         &.router-link-active
           .m-tab-link
-            color $color-theme
-            border-bottom 2px solid $color-theme
+            color: $color-theme
+            border-bottom: 2px solid $color-theme
 </style>

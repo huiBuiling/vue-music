@@ -19,5 +19,5 @@ export default {
 </script>
 
 <style lang="stylus">
-  @import "~assets/stylus/variable"
+  @import "~assets/stylus/index"
 </style>
