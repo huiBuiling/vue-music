@@ -14,7 +14,6 @@
       </div>
 
       <!--list-->
-      <!--<div class="m-singer-detail-con">-->
         <van-tabs v-model="active" @click="checkType" animated>
           <!--单曲-->
           <van-tab title="单曲"></van-tab>
@@ -36,7 +35,6 @@
               </div>
             </li>
           </ul>
-          <!--</scroll>-->
 
           <!--专辑-->
           <ul v-if="active === 1">
@@ -59,12 +57,12 @@
                 <div>
                   <p>{{item.name}}</p>
                   <p>{{item.artistName}}</p>
+                  <p>时间：{{item.publishTime}}</p>
                 </div>
               </div>
             </li>
           </ul>
         </div>
-      <!--</div>-->
     </div>
 
     <!--播放器-->
@@ -294,12 +292,16 @@ export default {
                 height: 60px
                 margin-right: 10px
                 float: left
+                border-radius: 5px
               div
                 float: left
+                padding-top: 5px
                 p
-                  color: $color-text
-                  line-height: 30px
-                  &:last-child
-                    color: $color-text-d
-                    font-size: $font-size-small
+                  line-height: 18px
+                  color: $color-text-d
+                  font-size: $font-size-small
+                  &:first-child
+                    color: $color-text
+                    font-size: $font-size-medium
+                    margin-bottom: 3px
 </style>
