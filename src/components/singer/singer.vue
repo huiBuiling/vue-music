@@ -37,10 +37,15 @@ export default {
   methods: {
     // 获取歌手列表
     getSingerList() {
+      this.$toast.loading({
+        mask: true,
+        message: '加载中...'
+      })
       query(this.singerUrl).then((res) => {
         if (res.code === 200) {
           this.singers = res.data
           this.showSinger = true
+          this.$toast.clear()
         }
       })
     },

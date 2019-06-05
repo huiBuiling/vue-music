@@ -1,10 +1,9 @@
-// 要设置的全局访问的state对象
+// 设置的全局访问的state对象
 const state = {
   singerImg: 'http://y.gtimg.cn/music/photo_new/T001R150x150M0000020PeOh4ZaCw1.webp',
   currentSong: {}
 }
 
-// 设置值
 const mutations = {
   'SET_CURRENT_SONG_DETAIL': (state, newSong) => {
     state.currentSong = newSong
@@ -14,7 +13,6 @@ const mutations = {
   }
 }
 
-// 执行方法
 const actions = {
   setCurrentSong({ commit }, currentSong) {
     commit('SET_CURRENT_SONG_DETAIL', currentSong)

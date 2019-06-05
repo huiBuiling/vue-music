@@ -7,8 +7,8 @@
       <router-link tag="div" class="m-tab-item" to="/singer">
         <span class="m-tab-link">歌手</span>
       </router-link>
-      <router-link tag="div" class="m-tab-item" to="/rank">
-      <span class="m-tab-link">排行
+      <router-link tag="div" class="m-tab-item" to="/sheet">
+      <span class="m-tab-link">歌单
       </span>
       </router-link>
       <router-link tag="div" class="m-tab-item" to="/search">

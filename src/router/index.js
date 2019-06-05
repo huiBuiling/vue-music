@@ -29,9 +29,9 @@ export default new Router({
       ]
     },
     {
-      path: '/rank',
-      name: 'rank',
-      component: () => import('components/rank/rank')
+      path: '/sheet',
+      name: 'sheet',
+      component: () => import('components/sheet/sheet')
     },
     {
       path: '/search',

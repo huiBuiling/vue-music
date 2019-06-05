@@ -51,6 +51,10 @@ export default {
   },
   methods: {
     _getRecommend() {
+      this.$toast.loading({
+        mask: true,
+        message: '加载中...'
+      })
       getRecommend().then(res => {
         if (res.code === 0) {
           this.recommend_imgs = res.data.slider
@@ -61,6 +65,7 @@ export default {
       query(this.listUrl).then(res => {
         if (res.code === 200) {
           this.recommend_lists = res.data.list
+          this.$toast.clear()
         }
       })
     }
