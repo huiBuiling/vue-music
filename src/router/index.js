@@ -31,7 +31,14 @@ export default new Router({
     {
       path: '/sheet',
       name: 'sheet',
-      component: () => import('components/sheet/sheet')
+      component: () => import('components/sheet/sheet'),
+      children: [
+        {
+          path: ':id',
+          name: 'sheetDetail',
+          component: () => import('components/sheet/sheetDetail')
+        }
+      ]
     },
     {
       path: '/search',

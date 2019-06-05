@@ -1,7 +1,7 @@
 <template>
   <div class="m-sheet">
-    <ul>
-      <li v-for="(item, index) in datas" :key="index">
+    <ul class="m-sheet-con">
+      <li v-for="(item, index) in datas" :key="index" @click="goDetail(item.id)">
         <img :src="item.creator.backgroundUrl" alt="">
         <div>
           <p class="name"><span>{{item.tag}}</span>{{item.name}}</p>
@@ -10,6 +10,9 @@
         </div>
       </li>
     </ul>
+
+    <!--详情-->
+    <router-view />
   </div>
 </template>
 
@@ -37,6 +40,12 @@ export default {
         this.datas = res.data
         this.$toast.clear()
       })
+    },
+    // 跳转详情
+    goDetail(id) {
+      this.$router.push({
+        path: `/sheet/${id}`
+      })
     }
   },
   created () {
@@ -48,7 +57,7 @@ export default {
 <style lang="stylus">
   @import "~assets/stylus/index"
   .m-sheet
-    ul
+    .m-sheet-con
       padding: 10px
       li
         background: $color-dialog-background

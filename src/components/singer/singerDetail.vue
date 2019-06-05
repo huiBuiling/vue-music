@@ -82,7 +82,7 @@
  */
 import Vue from 'vue'
 import {query} from '../../utils/AxiosUtil'
-import Player from './player'
+import Player from '../player/player'
 import { Tab, Tabs } from 'vant'
 import { musicMixin } from '../../utils/mixin'
 // import BScroll from 'better-scroll'
@@ -100,6 +100,7 @@ export default {
     return {
       // tab active
       active: 0,
+      title: '单曲',
       // 单曲列表
       musicDatas: [],
       musicUrl: '/netease/song/artist?id=',
@@ -142,13 +143,15 @@ export default {
     },
     // 切换类型
     checkType(index, title) {
-      this.$toast.loading({
-        mask: true,
-        message: '加载中...'
-      })
-      this.active = index
-      const id = this.$route.params.id
-      this.getSingerDetail(id, title)
+      if (this.title !== title) {
+        this.$toast.loading({
+          mask: true,
+          message: '加载中...'
+        })
+        this.title = title
+        const id = this.$route.params.id
+        this.getSingerDetail(id, title)
+      }
     },
     // 返回
     goBack() {
