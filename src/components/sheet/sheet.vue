@@ -82,6 +82,14 @@ export default {
             no-warp()
             &.name
               font-size: $font-size-medium
+              span
+                background: $color-theme
+                display: inline-block
+                vertical-align: text-top
+                font-size: $font-size-small
+                padding: 3px 5px
+                border-radius: 2px
+                margin-right: 5px
             &.nickname
               font-size: $font-size-small
               color: $color-text-d

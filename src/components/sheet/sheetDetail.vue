@@ -1,7 +1,7 @@
 <template>
   <div class="m-sheet-list">
     <!--详情-->
-    <div v-if="listDatas.tracks" class="m-sheet-all">
+    <div v-if="listDatas.playCount" class="m-sheet-all">
       <!--img-->
       <div class="admin-img" :style="bgStyle">
         <van-icon
@@ -29,8 +29,8 @@
             </span>
             <span style="float: right;">
               标签：
-              <span style="color: #ffcd32" v-for="(item, index) in listDatas.tags" :key="index">
-                {{item}} {{index < item.length ? '/':''}}
+              <span style="color: #ffcd32" v-for="(tag, indexT) in listDatas.tags" :key="indexT">
+                {{tag}}{{indexT === (listDatas.tags.length - 1) ? '':'/'}}
               </span>
             </span>
           </p>
@@ -43,10 +43,10 @@
         <ul >
           <li v-for="(item, index) in listDatas.tracks" :key="index" @click="goPlayer(item)">
             <div class="m-detail-songs">
-              <p>歌名：{{item.name}}</p>
-              <p>
-                  歌手：
-                  <span v-for="(itemA, indexA) in item.artists" :key="indexA">
+              <img :src="item.album.picUrl" alt="">
+              <p class="m-sheet-names">
+                <span>{{item.name}} - </span>
+                <span v-for="(itemA, indexA) in item.artists" :key="indexA" style="font-size: 12px">
                     {{itemA.name}}{{index === (item.artists.length - 1) ? '':','}}
                   </span>
               </p>
@@ -56,13 +56,6 @@
         </ul>
       </div>
     </div>
-
-    <!--播放器-->
-    <player
-      v-if="showPlayer || mini"
-      @showDetail="showDetail"
-      :mini="mini"
-    />
   </div>
 </template>
 
@@ -73,21 +66,13 @@
  * @Description: 歌手详情
  */
 import {query} from '../../utils/AxiosUtil'
-import Player from '../player/player'
 import { musicMixin } from '../../utils/mixin'
 export default {
   name: 'SheetDetail',
-  components: {
-    Player
-  },
   mixins: [musicMixin],
   data () {
     return {
-      listDatas: [],
-      // 是否显示播放器
-      showPlayer: false,
-      // mini模式
-      mini: false
+      listDatas: []
     }
   },
   methods: {
@@ -119,9 +104,7 @@ export default {
         url: 'http://www.ytmp3.cn/down/50354.mp3'
       }
       this.setCurrentSong(curSong)
-
-      this.showPlayer = true
-      this.mini = false
+      this.setShowPlayer(true)
     },
     // 显示详情
     showDetail() {
@@ -210,14 +193,24 @@ export default {
           li
             width: 100%
             clear: both
-            margin-bottom: 5px
             overflow: hidden
+            margin-bottom: 7px
+            border: 1px solid $color-dialog-background
             .m-detail-songs
               overflow: hidden
               font-size: $font-size-small
+              padding: 7px
+              img
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                float: left;
+                margin-right: 10px;
               p
                 line-height: 20px
-                color: $color-text
-                &:last-child
-                  color: $color-text-d
+                color: $color-text-d
+                no-warp()
+                &.m-sheet-names
+                  color: $color-text
+                  font-size: $font-size-medium
 </style>
