@@ -2,19 +2,21 @@ import { mapGetters, mapActions } from 'vuex'
 export const musicMixin = {
   computed: {
     ...mapGetters([
-      'currentSong',
-      'singerImg',
       'showPlayer',
       'mini',
-      'songLists'
+      'currentSong',
+      'songLists',
+      'singerImg',
+      'playMode'
     ])
   },
   methods: {
     ...mapActions([
+      'setShowPlayer',
+      'setMini',
       'setCurrentSong',
       'setSingerImg',
-      'setShowPlayer',
-      'setMini'
+      'setPlayMode'
     ]),
     filterNum(val) {
       const str = val.toString()

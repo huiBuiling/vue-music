@@ -1,9 +1,17 @@
 // 设置的全局访问的state对象
 const state = {
   singerImg: 'http://y.gtimg.cn/music/photo_new/T001R150x150M0000020PeOh4ZaCw1.webp',
-  showPlayer: false,
+  showPlayer: true,
   mini: false,
-  currentSong: {},
+  // 播放模式：0 -> 列表循环 | 1 -> 随机播放 | 2 -> 单曲循环
+  playMode: 1,
+  currentSong: {
+    id: '1',
+    singer: [{name: '花粥'}],
+    name: '归去来兮',
+    img: 'http://p4.music.126.net/H6dt7IgvXNWhRM_w7XbcqQ==/109951163990575387.jpg',
+    url: 'http://www.ytmp3.cn/down/50354.mp3'
+  },
   songLists: [
     {
       id: '1',
@@ -50,6 +58,9 @@ const mutations = {
   'SET_MINI': (state, mini) => {
     state.mini = mini
   },
+  'SET_MODE': (state, mode) => {
+    state.playMode = mode
+  },
   'SET_CURRENT_SONG_DETAIL': (state, newSong) => {
     state.currentSong = newSong
   },
@@ -65,6 +76,9 @@ const actions = {
   setMini({ commit }, mini) {
     commit('SET_MINI', mini)
   },
+  setPlayMode({ commit }, mode) {
+    commit('SET_MODE', mode)
+  },
   setCurrentSong({ commit }, currentSong) {
     commit('SET_CURRENT_SONG_DETAIL', currentSong)
   },
@@ -77,6 +91,7 @@ const actions = {
 const getters = {
   showPlayer: state => state.showPlayer,
   mini: state => state.mini,
+  playMode: state => state.playMode,
   currentSong: state => state.currentSong,
   songLists: state => state.songLists,
   singerImg: state => state.singerImg

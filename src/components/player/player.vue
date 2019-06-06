@@ -30,7 +30,7 @@
 
         <!--bar-->
         <div class="m-player-bar">
-          <span><i class="icon-p-sj"/></span>
+          <span @click="changeMode"><i :class="{'icon-p-m-lb2': playMode === 0, 'icon-p-m-sj': playMode === 1, 'icon-p-m-dq': playMode === 2}" /></span>
           <span @click="pre"><i class="icon-p-pre"/></span>
           <!-- 播放 | 暂停-->
           <span><i style="font-size: 38px" :class="{'icon-p-bf': isPlay, 'icon-p-zt': !isPlay}" @click="isPlayMusic()"/></span>
@@ -125,9 +125,21 @@ export default {
       })
     },
     // 显示全屏
-    showScreen () {
+    showScreen() {
       this.setShowPlayer(true)
       this.setMini(false)
+    },
+    // 切换播放模式
+    changeMode() {
+      const audios = this.$refs.audio
+      let mode = this.playMode
+      if (mode === 2) {
+        audios.loop = false
+        this.setPlayMode(0)
+      } else {
+        mode++
+        this.setPlayMode(mode)
+      }
     },
     /* 音乐操作 */
     // 播放 / 暂停
@@ -144,35 +156,67 @@ export default {
         audios.pause()
       }
     },
-    // 上一首
-    pre () {
-      const audios = this.$refs.audio
+    getCurIndex(flag) {
       const id = this.currentSong.id
       const index = this.songLists.findIndex(item => item.id === id)
-      const curSong = this.songLists[index - 1]
-      if (index > 0) {
-        audios.src = curSong.url
-        audios.load()
-        audios.play()
-        this.setCurrentSong(curSong)
+      if (flag === null) {
+        return index
+      } else if (flag === 0 || flag === 1) {
+        const curSong = flag === 1 ? this.songLists[index + 1] : this.songLists[index - 1]
+        return curSong
+      }
+    },
+    playMusic(audio, flag) {
+      let curSong
+      if (flag === 2) {
+        let index = this.getCurIndex(null)
+        let radomIndex = parseInt(Math.random() * this.songLists.length)
+        index = index === radomIndex ? radomIndex - 1 : radomIndex
+        console.log(radomIndex)
+        curSong = this.songLists[index]
+      } else {
+        curSong = this.getCurIndex(flag)
+      }
+      audio.src = curSong.url
+      audio.load()
+      audio.play()
+      this.setCurrentSong(curSong)
+    },
+    // 上一首
+    pre() {
+      const audios = this.$refs.audio
+      if (this.getCurIndex(null) > 0) {
+        this.playMusic(audios, 0)
       }
     },
     // 下一首
-    next () {
+    next() {
       const audios = this.$refs.audio
-      const id = this.currentSong.id
-      const index = this.songLists.findIndex(item => item.id === id)
-      const curSong = this.songLists[index + 1]
-      if (index < this.songLists.length) {
-        audios.src = curSong.url
-        audios.load()
-        audios.play()
-        this.setCurrentSong(curSong)
+      if (this.getCurIndex(null) < this.songLists.length) {
+        this.playMusic(audios, 1)
       }
     },
     // 播放完毕
     end() {
-      this.isPlay = false
+      const audios = this.$refs.audio
+      if (this.playMode === 0) {
+        // 列表循环，播到列表最后一首停止
+        if (this.getCurIndex(null) === this.songLists.length) {
+          // 最后一首
+          this.isPlay = false
+        } else {
+          this.next()
+        }
+      } else if (this.playMode === 1) {
+        // 随机循环，不做判断，即不手动暂停，则循环无限
+        this.playMusic(audios, 2)
+      } else if (this.playMode === 2) {
+        // 单曲循环，不做判断，即不手动暂停，则循环无限
+        audios.loop = true
+        audios.currentTime = 0
+        this.currentTime = 0
+        audios.play()
+      }
     },
     // 出错
     error() {
