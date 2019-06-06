@@ -1,7 +1,7 @@
 <template>
   <div class="m-player">
     <!--全屏-->
-    <div class="m-player-screen" v-if="!mini">
+    <div class="m-player-screen" v-show="!mini && currentSong.name">
       <!--header-->
       <div class="m-player-head">
         <van-icon name="arrow-left" @click="goBack"/>
@@ -10,12 +10,12 @@
 
       <!--con-->
       <div class="m-player-con" :class="{'play':isPlay, 'pause':!isPlay}">
-        <img v-if="currentSong.img" :src="currentSong.img" alt="">
+        <img :src="currentSong.img" alt="">
       </div>
 
       <!--lrc-->
       <div class="m-player-lrc">
-        <!--<div v-for="(item, index) in detail.lrc" :key="index" v-if="detail.lrc">
+        <!--<div v-for="(item, index) in detail.lrc" :key="index">
           <p>{{item}}</p>
         </div>-->
       </div>
@@ -31,10 +31,10 @@
         <!--bar-->
         <div class="m-player-bar">
           <span><i class="icon-p-sj"/></span>
-          <span><i class="icon-p-pre"/></span>
+          <span @click="pre"><i class="icon-p-pre"/></span>
           <!-- 播放 | 暂停-->
           <span><i style="font-size: 38px" :class="{'icon-p-bf': isPlay, 'icon-p-zt': !isPlay}" @click="isPlayMusic()"/></span>
-          <span><i class="icon-p-next"/></span>
+          <span @click="next"><i class="icon-p-next"/></span>
           <span><i class="icon-p-xh"/></span>
         </div>
       </div>
@@ -52,9 +52,9 @@
     />
 
     <!--mini-->
-    <div class="m-player-mini" v-if="mini">
-      <div class="m-player-mini-l">
-        <img v-if="currentSong.img" :src="currentSong.img" alt="">
+    <div class="m-player-mini" v-show="mini && currentSong.name">
+      <div class="m-player-mini-l" @click="showScreen">
+        <img :src="currentSong.img" alt="">
         <div>
           <p>{{currentSong.name}}</p>
           <p>
@@ -83,9 +83,6 @@ import { Slider } from 'vant'
 Vue.use(Slider)
 export default {
   name: 'Player',
-  props: {
-    mini: Boolean
-  },
   mixins: [musicMixin],
   data () {
     return {
@@ -97,14 +94,6 @@ export default {
       allTime: 0,
       // 进度值
       value: 0,
-      /* currentSong: {
-        id: '1357999894',
-        singer: [{name: '花粥'}, {name: '胜男'}],
-        name: '归去来兮',
-        img: 'http://p4.music.126.net/H6dt7IgvXNWhRM_w7XbcqQ==/109951163990575387.jpg',
-        // url: 'http://www.ytmp3.cn/down/59296.mp3'
-        url: 'http://www.ytmp3.cn/down/50354.mp3'
-      }, */
       // 音量
       volume: 20
     }
@@ -113,6 +102,8 @@ export default {
     // 返回
     goBack() {
       this.$emit('showDetail')
+      this.setShowPlayer(false)
+      this.setMini(true)
     },
     // 获取音乐地址
     getMusicUrl(id) {
@@ -133,22 +124,50 @@ export default {
         }
       })
     },
+    // 显示全屏
+    showScreen () {
+      this.setShowPlayer(true)
+      this.setMini(false)
+    },
     /* 音乐操作 */
     // 播放 / 暂停
     isPlayMusic() {
       const audios = this.$refs.audio
-
-      // this.isPlay = true, 在播放，当前执行暂停
-      // this.isPlay = false, 暂停，当前执行播放
       if (!this.isPlay) {
-        // 播放
+        // 在播放，当前执行暂停
         this.isPlay = true
         audios.load()
         audios.play()
       } else {
-        // 暂停
+        // 暂停，当前执行播放
         this.isPlay = false
         audios.pause()
+      }
+    },
+    // 上一首
+    pre () {
+      const audios = this.$refs.audio
+      const id = this.currentSong.id
+      const index = this.songLists.findIndex(item => item.id === id)
+      const curSong = this.songLists[index - 1]
+      if (index > 0) {
+        audios.src = curSong.url
+        audios.load()
+        audios.play()
+        this.setCurrentSong(curSong)
+      }
+    },
+    // 下一首
+    next () {
+      const audios = this.$refs.audio
+      const id = this.currentSong.id
+      const index = this.songLists.findIndex(item => item.id === id)
+      const curSong = this.songLists[index + 1]
+      if (index < this.songLists.length) {
+        audios.src = curSong.url
+        audios.load()
+        audios.play()
+        this.setCurrentSong(curSong)
       }
     },
     // 播放完毕
@@ -215,11 +234,12 @@ export default {
       transform: rotate(360deg)
   .m-player
     .m-player-mini
-      position: absolute;
-      bottom: 0;
-      left: 0;
+      position: fixed
+      bottom: 0
+      left: 0
       width: 100%
       height: 60px
+      background: $color-background
       border-top: 1px solid $color-text-d
       .m-player-mini-l
         float: left

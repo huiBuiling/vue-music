@@ -3,12 +3,18 @@ export const musicMixin = {
   computed: {
     ...mapGetters([
       'currentSong',
-      'singerImg'
+      'singerImg',
+      'showPlayer',
+      'mini',
+      'songLists'
     ])
   },
   methods: {
     ...mapActions([
-      'setCurrentSong'
+      'setCurrentSong',
+      'setSingerImg',
+      'setShowPlayer',
+      'setMini'
     ]),
     filterNum(val) {
       const str = val.toString()

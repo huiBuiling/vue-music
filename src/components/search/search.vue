@@ -17,7 +17,7 @@
     <div v-show="results.length > 0">
       <h5>搜索结果</h5>
       <ul>
-        <li v-for="(item, index) in results" :key="index">
+        <li v-for="(item, index) in results" :key="index" @click="goPlayer">
           <span class="name">{{item.name}} - </span>
           <span v-for="(itemA, indexA) in item.ar" :key="indexA">{{itemA.name}}<span v-show="indexA < (item.ar.length - 1)">,</span></span>
         </li>
@@ -35,10 +35,11 @@
 import Vue from 'vue'
 import {Search, Tag} from 'vant'
 import {query} from '../../utils/AxiosUtil'
-
+import {musicMixin} from '../../utils/mixin'
 Vue.use(Search).use(Tag)
 export default {
   name: 'Search',
+  mixins: [musicMixin],
   data() {
     return {
       value: '',
@@ -59,6 +60,19 @@ export default {
     setValue (val) {
       this.value = val
       this.onSearch()
+    },
+    // 显示播放器
+    goPlayer() {
+      const curSong = {
+        id: '1',
+        singer: [{name: '花粥'}, {name: '胜男'}],
+        name: '归去来兮',
+        img: 'http://p4.music.126.net/H6dt7IgvXNWhRM_w7XbcqQ==/109951163990575387.jpg',
+        url: 'http://www.ytmp3.cn/down/50354.mp3'
+      }
+      this.setCurrentSong(curSong)
+      this.setShowPlayer(true)
+      this.setMini(false)
     }
   }
 }
