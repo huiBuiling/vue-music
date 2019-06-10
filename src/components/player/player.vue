@@ -87,7 +87,7 @@ export default {
   data () {
     return {
       lrcUrl: '/tencent/lrc?id=',
-      isPlay: true,
+      isPlay: false,
       // 进度时间
       currentTime: 0,
       // 歌曲总长

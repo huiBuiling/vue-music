@@ -8,12 +8,14 @@
 
     <!--router-->
     <div class="m-all">
-      <router-view />
+      <keep-alive>
+        <router-view include="SingerDetail" />
+      </keep-alive>
     </div>
 
     <!--播放器-->
     <player
-      v-show="showPlayer || mini"
+      v-if="showPlayer || mini"
     />
 
   </div>
