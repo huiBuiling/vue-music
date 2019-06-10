@@ -87,7 +87,7 @@ export default {
   data () {
     return {
       lrcUrl: '/tencent/lrc?id=',
-      isPlay: false,
+      isPlay: true,
       // 进度时间
       currentTime: 0,
       // 歌曲总长
@@ -285,6 +285,7 @@ export default {
       height: 60px
       background: $color-background
       border-top: 1px solid $color-text-d
+      z-index: 100
       .m-player-mini-l
         float: left
         padding: 10px
