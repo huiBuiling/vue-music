@@ -85,7 +85,7 @@ export default {
     height: 100%
     .m-recommend-swipe
       width: 100%
-      height: 200px
+      height: 170px
       overflow: hidden
       .van-swipe
         width: 100%
@@ -98,15 +98,15 @@ export default {
       h3
         text-align: center
         color: $color-theme
-        margin-top: 20px
-        margin-bottom: 10px
-        font-size: $font-size-large
+        margin-top: 5px
+        font-size: $font-size-medium-x
       ul
         padding: 10px
         li
           width: 100%
+          height: 60px
           clear: both
-          margin-bottom: 20px
+          margin-bottom: 10px
           div
             font-size: $font-size-medium
             img
@@ -114,10 +114,13 @@ export default {
               height: 60px
               float: left
               margin-right: 10px
+              border-radius: 2px
             div
-              padding-top: 5px
+              padding-top: 2px
               p
                 line-height: 28px
                 &:last-child
                   color: $color-text-d
+                  font-size: $font-size-small
+                  line-height: 20px
 </style>

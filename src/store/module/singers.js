@@ -1,7 +1,7 @@
 // 设置的全局访问的state对象
 const state = {
   singerImg: 'http://y.gtimg.cn/music/photo_new/T001R150x150M0000020PeOh4ZaCw1.webp',
-  showPlayer: true,
+  showPlayer: false,
   mini: false,
   // 播放模式：0 -> 列表循环 | 1 -> 随机播放 | 2 -> 单曲循环
   playMode: 1,

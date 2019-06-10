@@ -84,12 +84,12 @@ export default {
         div
           font-size: $font-size-medium
           img
-            width: 40px
-            height: 40px
+            width: 30px
+            height: 30px
             float: left
             margin-right: 10px
             border-radius: 50%
           span
             color: $color-text
-            line-height: 40px
+            line-height: 30px
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div class="m-singer-detail">
     <!--详情-->
-    <div v-if="!showPlayer" class="m-singer-all">
+    <div v-show="!showPlayer" class="m-singer-all">
       <!--img-->
       <div class="admin-img" :style="bgStyle">
         <van-icon
@@ -64,13 +64,6 @@
           </ul>
         </div>
     </div>
-
-    <!--播放器-->
-    <player
-      v-if="showPlayer || mini"
-      @showDetail="showDetail"
-      :mini="mini"
-    />
   </div>
 </template>
 
@@ -109,11 +102,7 @@ export default {
       albumUrl: '/netease/album/artist?id=',
       // MV列表
       mvDatas: [],
-      mvUrl: '/netease/mv/artist?id=',
-      // 是否显示播放器
-      showPlayer: false,
-      // mini模式
-      mini: false
+      mvUrl: '/netease/mv/artist?id='
     }
   },
   methods: {
@@ -165,24 +154,8 @@ export default {
         name: item.name,
         img: item.al.picUrl
       } */
-      const curSong = {
-        id: '1357999894',
-        singer: [{name: '花粥'}, {name: '胜男'}],
-        name: '归去来兮',
-        img: 'http://p4.music.126.net/H6dt7IgvXNWhRM_w7XbcqQ==/109951163990575387.jpg',
-        url: 'http://www.ytmp3.cn/down/50354.mp3'
-      }
-      // this.$store.dispatch('singers/setCurrentSong', this.currentSong)
-      // 使用 musicMixin
-      this.setCurrentSong(curSong)
-
-      this.showPlayer = true
-      this.mini = false
-    },
-    // 显示详情
-    showDetail() {
-      this.showPlayer = false
-      this.mini = true
+      // this.setCurrentSong(curSong)
+      this.setShowPlayer(true)
     }
   },
   computed: {
